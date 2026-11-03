@@ -1,6 +1,6 @@
 @use "@/styles/media" as media;
 @use "@/styles/theme" as theme;
-@import "@/styles/helpers/mixins";
+@use "@/styles/helpers/mixins" as *;
 
 .list {
   @include flex-align-center;

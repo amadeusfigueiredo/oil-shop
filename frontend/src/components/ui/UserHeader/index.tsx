@@ -3,32 +3,20 @@ import { useUserContext } from "@/context/userContext"
 import { useTranslation } from "@/hooks/useTranslation"
 import { UserHeader as IUserHeader } from "@/types/User"
 import { setDefaultImageByError } from "@/utils/setDefaultImageByError"
-import { useEffect, useState } from "react"
 import styles from "./userHeader.module.scss"
 
 export const UserHeader = () => {
-  const [userData, setUserData] = useState<IUserHeader>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    image: "",
-  })
   const { user, isLoading } = useUserContext()
   const { commonProperties } = useTranslation()
 
-  useEffect(() => {
-    if (isLoading) {
-      return
-    } else {
-      setUserData({
+  const userData: IUserHeader | null = isLoading
+    ? null
+    : {
         firstName: user?.firstName,
         lastName: user?.lastName,
         email: user?.email,
         image: user?.image,
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+      }
 
   return (
     <header className={styles.wrapper} aria-label='User Description'>

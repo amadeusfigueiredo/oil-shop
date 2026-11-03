@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios"
 import { PRODUCTS } from "@/constants/api"
 
 export async function deleteProductById(
-  id: number
+  id: number,
 ): Promise<AxiosResponse<void>> {
   const url = `${import.meta.env.VITE_APP_API_URL}${PRODUCTS}/${id}`
   try {

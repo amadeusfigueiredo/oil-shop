@@ -4,7 +4,7 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
+  use,
   useState,
 } from "react"
 
@@ -22,7 +22,7 @@ const MatchedItemsContext = createContext<MatchedItemsContextType | undefined>(
 )
 
 export const useMatchedItemsContext = () => {
-  const context = useContext(MatchedItemsContext)
+  const context = use(MatchedItemsContext)
   if (!context) {
     throw new Error(
       "useMatchedItemsContext must be used within a MatchedItemsProvider",
@@ -38,7 +38,7 @@ export const MatchedItemsProvider = ({ children }: { children: ReactNode }) => {
   const [searchProductText, setSearchProductText] = useState<string>("")
 
   return (
-    <MatchedItemsContext.Provider
+    <MatchedItemsContext
       value={{
         matchedProducts,
         setMatchedProducts,
@@ -49,6 +49,6 @@ export const MatchedItemsProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </MatchedItemsContext.Provider>
+    </MatchedItemsContext>
   )
 }

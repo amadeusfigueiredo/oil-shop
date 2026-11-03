@@ -7,6 +7,7 @@ export const createOrderItem = async (order: OrderItem) => {
     const response = await axios.post(
       `${import.meta.env.VITE_APP_API_URL}${ORDER_ITEMS}`,
       order,
+      { withCredentials: true },
     )
     if (response && response.status === 201) {
       return response

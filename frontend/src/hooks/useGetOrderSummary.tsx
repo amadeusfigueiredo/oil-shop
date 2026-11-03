@@ -37,8 +37,7 @@ export const useGetOrderSummary = () => {
     }
 
     getOrderSummary()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn, user])
+  }, [isLoggedIn, user, setNotification])
 
   return { userData, shippingData, orderData, orderAndCartItems }
 }

@@ -1,51 +1,34 @@
-name: Main
+name: Quality
 
 on:
   push:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
-  lint:
+  check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [16.x]
+        project: [backend, frontend]
+    defaults:
+      run:
+        working-directory: ${{ matrix.project }}
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install backend dependencies
-        working-directory: ./backend
-        run: npm install
-      - name: Run eslint on backend
-        working-directory: ./backend
-        run: npm run eslint
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm install
-      - name: Run eslint on frontend
-        working-directory: ./frontend
-        run: npm run eslint
-
-  test:
-    needs: lint
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm install
-      - name: Frontend tests
-        working-directory: ./frontend
-        run: npm test
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: ${{ matrix.project }}/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+      - run: npm run build
+        if: matrix.project == 'frontend'

@@ -19,7 +19,7 @@ export const useGetUserOrders = () => {
         if (response && response.status === 200) {
           setOrders(response.data)
         }
-      } catch (error) {
+      } catch {
         setNotification("Error by getting user orders")
         setTimeoutId = setTimeout(
           () => setNotification(null),
@@ -30,8 +30,7 @@ export const useGetUserOrders = () => {
     getData()
 
     return () => clearTimeout(setTimeoutId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [user, setNotification])
 
   return { orders }
 }

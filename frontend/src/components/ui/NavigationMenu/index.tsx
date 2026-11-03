@@ -34,9 +34,9 @@ export const NavigationMenu = () => {
         <nav className={styles.navigationMenu} aria-label='navigation menu'>
           <ul className={styles.list}>
             {navigationMenuItems &&
-              navigationMenuItems.map((item, index) => {
+              navigationMenuItems.map((item) => {
                 return (
-                  <li className={styles.listItem} key={index}>
+                  <li className={styles.listItem} key={item.path}>
                     <ActionButton
                       action={(e) =>
                         onSelect(e as MouseEvent<HTMLButtonElement>, item)

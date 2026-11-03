@@ -3,14 +3,16 @@ import { PRODUCT_BY_NAME } from "@/constants/api"
 import type { Product } from "@/types/Product"
 
 export async function getProductByName(
-  name: string
+  name: string,
 ): Promise<AxiosResponse<Product | undefined>> {
   const url = `${import.meta.env.VITE_APP_API_URL}${PRODUCT_BY_NAME}/${encodeURIComponent(
-    name
+    name,
   )}`
 
   try {
-    const response = await axios.get<Product>(url, { validateStatus: () => true })
+    const response = await axios.get<Product>(url, {
+      validateStatus: () => true,
+    })
     if (response.status === 200 || response.status === 404) {
       return response as AxiosResponse<Product | undefined>
     }

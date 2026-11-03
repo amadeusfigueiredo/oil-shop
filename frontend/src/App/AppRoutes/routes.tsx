@@ -1,3 +1,4 @@
+import { lazy } from "react"
 import {
   ABOUT,
   ACCOUNT_ORDERS,
@@ -20,25 +21,75 @@ import {
   USERS_CREATE,
   USERS_MANAGEMENT,
 } from "@/constants/routes"
-import { About } from "@/pages/About"
-import { Admin } from "@/pages/Admin"
-import { Cart } from "@/pages/Cart"
-import { CreateProduct } from "@/pages/CreateProduct"
-import { CreateUser } from "@/pages/CreateUser"
-import { Faq } from "@/pages/Faq"
-import { Home } from "@/pages/Home"
-import { Login } from "@/pages/Login"
-import { NotFound } from "@/pages/NotFound"
-import { Orders } from "@/pages/Orders"
-import { OrderSummary } from "@/pages/OrderSummary"
-import { Payment } from "@/pages/Payment"
-import { ProductDetails } from "@/pages/ProductDetails"
-import { ProductsManagement } from "@/pages/ProductsManagement"
-import { Profile } from "@/pages/Profile"
-import { Shop } from "@/pages/Shop"
-import { SignUp } from "@/pages/SignUp"
-import { User } from "@/pages/User"
-import { UsersManagement } from "@/pages/UsersManagement"
+const About = lazy(() =>
+  import("@/pages/About").then((module) => ({ default: module.About })),
+)
+const Admin = lazy(() =>
+  import("@/pages/Admin").then((module) => ({ default: module.Admin })),
+)
+const Cart = lazy(() =>
+  import("@/pages/Cart").then((module) => ({ default: module.Cart })),
+)
+const CreateProduct = lazy(() =>
+  import("@/pages/CreateProduct").then((module) => ({
+    default: module.CreateProduct,
+  })),
+)
+const CreateUser = lazy(() =>
+  import("@/pages/CreateUser").then((module) => ({
+    default: module.CreateUser,
+  })),
+)
+const Faq = lazy(() =>
+  import("@/pages/Faq").then((module) => ({ default: module.Faq })),
+)
+const Home = lazy(() =>
+  import("@/pages/Home").then((module) => ({ default: module.Home })),
+)
+const Login = lazy(() =>
+  import("@/pages/Login").then((module) => ({ default: module.Login })),
+)
+const NotFound = lazy(() =>
+  import("@/pages/NotFound").then((module) => ({ default: module.NotFound })),
+)
+const Orders = lazy(() =>
+  import("@/pages/Orders").then((module) => ({ default: module.Orders })),
+)
+const OrderSummary = lazy(() =>
+  import("@/pages/OrderSummary").then((module) => ({
+    default: module.OrderSummary,
+  })),
+)
+const Payment = lazy(() =>
+  import("@/pages/Payment").then((module) => ({ default: module.Payment })),
+)
+const ProductDetails = lazy(() =>
+  import("@/pages/ProductDetails").then((module) => ({
+    default: module.ProductDetails,
+  })),
+)
+const ProductsManagement = lazy(() =>
+  import("@/pages/ProductsManagement").then((module) => ({
+    default: module.ProductsManagement,
+  })),
+)
+const Profile = lazy(() =>
+  import("@/pages/Profile").then((module) => ({ default: module.Profile })),
+)
+const Shop = lazy(() =>
+  import("@/pages/Shop").then((module) => ({ default: module.Shop })),
+)
+const SignUp = lazy(() =>
+  import("@/pages/SignUp").then((module) => ({ default: module.SignUp })),
+)
+const User = lazy(() =>
+  import("@/pages/User").then((module) => ({ default: module.User })),
+)
+const UsersManagement = lazy(() =>
+  import("@/pages/UsersManagement").then((module) => ({
+    default: module.UsersManagement,
+  })),
+)
 
 export const routes = [
   { path: ABOUT, element: <About /> },

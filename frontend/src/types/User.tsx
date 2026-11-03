@@ -5,10 +5,9 @@ export interface User {
   firstName: string
   lastName: string
   email: string
-  password: string
   image: string
   roleId: number
-  role?: { id: number; name: string }
+  role?: { id?: number; name: string }
 }
 
 export interface CreateUser {
@@ -75,11 +74,11 @@ export interface UserContextType {
   onCreateCustomer: (
     e: FormEvent<HTMLFormElement>,
     data: CreateUser,
-  ) => Promise<User>
+  ) => Promise<User | undefined>
   onCreateAdmin: (
     e: FormEvent<HTMLFormElement>,
     data: CreateUser,
-  ) => Promise<User>
+  ) => Promise<User | undefined>
   onUpdateShippingData: (data: {
     id: number
     initialData: EditShippingData

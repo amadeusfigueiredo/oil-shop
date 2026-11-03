@@ -75,8 +75,12 @@ $z-index-input: 3;
 $z-index-input-icon: 2;
 $z-index-background: -1;
 $opacity-hover: 0.6;
-$box-shadow-primary: 0 3px 1px -2px rgb(0 0 0 / 20%),
-  0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
-$box-shadow-light: 0 1px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%),
+$box-shadow-primary:
+  0 3px 1px -2px rgb(0 0 0 / 20%),
+  0 2px 2px 0 rgb(0 0 0 / 14%),
+  0 1px 5px 0 rgb(0 0 0 / 12%);
+$box-shadow-light:
+  0 1px 1px -1px rgb(0 0 0 / 20%),
+  0 1px 1px 0 rgb(0 0 0 / 14%),
   0 1px 2px 0 rgb(0 0 0 / 12%);
 $box-shadow-modal: 0 5px 15px rgba(0, 0, 0, 0.3);

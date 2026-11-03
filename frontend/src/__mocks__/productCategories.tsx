@@ -20,6 +20,6 @@ export const productCategories = [
 
 export const sortCategory = { id: 1, name: "roll" }
 export const productCategory = {
-    id: 5,
-    name: "massage oil",
-  }
+  id: 5,
+  name: "massage oil",
+}

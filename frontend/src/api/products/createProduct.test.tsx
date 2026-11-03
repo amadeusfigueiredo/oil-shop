@@ -27,22 +27,21 @@ describe("createProduct", () => {
 
     const result = await createProduct(product)
 
-    expect(mockedPost).toHaveBeenCalledWith(
-      `${baseUrl}${PRODUCTS}`,
-      product,
-      { withCredentials: true }
-    )
+    expect(mockedPost).toHaveBeenCalledWith(`${baseUrl}${PRODUCTS}`, product, {
+      withCredentials: true,
+    })
     expect(result).toBe(axiosResponse)
   })
 
   it("throws if status is not 201", async () => {
-    const axiosResponse = 
-      emptyAxiosResponse as unknown as AxiosResponse<{ product: Product }>
+    const axiosResponse = emptyAxiosResponse as unknown as AxiosResponse<{
+      product: Product
+    }>
 
     mockedPost.mockResolvedValue(axiosResponse)
 
     await expect(createProduct(product)).rejects.toThrow(
-      `createProduct: Unexpected status ${axiosResponse.status}`
+      `createProduct: Unexpected status ${axiosResponse.status}`,
     )
   })
 

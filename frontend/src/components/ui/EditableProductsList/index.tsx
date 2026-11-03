@@ -11,7 +11,7 @@ export const EditableProductsList: FC = () => {
   const { pages } = useTranslation()
   const text = pages.admin.usersManagement.editableItemsList
 
-  const [filterIndex, setFilterIndex] = useState<number | "">( "" )
+  const [filterIndex, setFilterIndex] = useState<number | "">("")
 
   const sortedProducts = useMemo<Product[]>(() => {
     if (filterIndex === "") return products
@@ -25,27 +25,27 @@ export const EditableProductsList: FC = () => {
     (e: ChangeEvent<HTMLSelectElement>) => {
       setFilterIndex(e.target.value === "" ? "" : Number(e.target.value))
     },
-    []
+    [],
   )
 
   return (
     <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.filterColumn}>
-          <label htmlFor="filterOptions" className={styles.label}>
+          <label htmlFor='filterOptions' className={styles.label}>
             {text.sortBy}:
           </label>
           <select
-            id="filterOptions"
+            id='filterOptions'
             className={styles.select}
             value={filterIndex}
             onChange={handleFilterChange}
           >
-            <option value="" disabled>
+            <option value='' disabled>
               {`${text.sortBy} …`}
             </option>
             {filterProductsProps.map((f, i) => (
-              <option key={i} value={i}>
+              <option key={`${f.targetProperty}-${f.isAsc}`} value={i}>
                 {text[f.targetProperty]}:{" "}
                 {f.isAsc ? text.ascendent : text.descendent}
               </option>

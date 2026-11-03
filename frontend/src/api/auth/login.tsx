@@ -1,9 +1,10 @@
+import type { User } from "@/types/User"
 import { LOGIN } from "@/constants/api"
 import axios from "axios"
 
 export const login = async (email: string, password: string) => {
   try {
-    const response = await axios.post(
+    const response = await axios.post<{ user: User; message: string }>(
       `${import.meta.env.VITE_APP_API_URL}${LOGIN}`,
       { email, password },
       { withCredentials: true },

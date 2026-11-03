@@ -29,7 +29,7 @@ describe("getProductByName", () => {
 
     expect(mockedGet).toHaveBeenCalledWith(
       `${baseUrl}${PRODUCT_BY_NAME}/${encodedName}`,
-      { validateStatus: expect.any(Function) }
+      { validateStatus: expect.any(Function) },
     )
     expect(result).toBe(axiosResponse)
   })
@@ -64,7 +64,7 @@ describe("getProductByName", () => {
     mockedGet.mockResolvedValue(axiosResponse)
 
     await expect(getProductByName(name)).rejects.toThrow(
-      `getProductByName: Unexpected status ${axiosResponse.status}`
+      `getProductByName: Unexpected status ${axiosResponse.status}`,
     )
   })
 

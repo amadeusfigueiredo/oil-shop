@@ -23,9 +23,9 @@ export const useLogin = () => {
         const user = loginResponse.data.user
         setUser(user)
         setIsLoggedIn(true)
-        if (user.role.name === "admin") {
+        if (user.role?.name === "admin") {
           navigate(CURRENT_ADMIN)
-        } else if (user.role.name === "customer") {
+        } else if (user.role?.name === "customer") {
           navigate(CURRENT_CUSTOMER)
         }
       }

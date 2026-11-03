@@ -10,7 +10,7 @@ export async function getProductCategories(): Promise<
     const response = await axios.get<Category[]>(url)
     if (response.status !== 200) {
       throw new Error(
-        `getProductCategories: Unexpected status ${response.status}`
+        `getProductCategories: Unexpected status ${response.status}`,
       )
     }
     return response

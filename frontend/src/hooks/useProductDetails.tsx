@@ -19,7 +19,7 @@ export const useProductDetails = () => {
         if (response?.status === 200) {
           setProduct(response.data)
         }
-      } catch (error) {
+      } catch {
         navigate(SHOP)
         onSetNotification(
           "Can not navigate to product, please try with another item",
@@ -27,8 +27,7 @@ export const useProductDetails = () => {
       }
     }
     getProductDetails()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id])
+  }, [id, navigate, onSetNotification])
 
   return { product, quantity, setQuantity }
 }

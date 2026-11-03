@@ -6,9 +6,13 @@ import { ProductProvider } from "./ProductProvider"
 import { useProductContext } from "./useProductContext"
 import { NotificationProvider } from "@/context/notificationContext"
 
-vi.mock("@/api/products/getProducts",       () => ({ getProducts: vi.fn() }))
-vi.mock("@/api/products/getProductCategories", () => ({ getProductCategories: vi.fn() }))
-vi.mock("@/api/products/deleteProductById", () => ({ deleteProductById: vi.fn() }))
+vi.mock("@/api/products/getProducts", () => ({ getProducts: vi.fn() }))
+vi.mock("@/api/products/getProductCategories", () => ({
+  getProductCategories: vi.fn(),
+}))
+vi.mock("@/api/products/deleteProductById", () => ({
+  deleteProductById: vi.fn(),
+}))
 
 import { getProducts } from "@/api/products/getProducts"
 import { getProductCategories } from "@/api/products/getProductCategories"
@@ -31,7 +35,7 @@ describe("ProductProvider", () => {
   })
 
   it("fetches products & categories on mount", async () => {
-    const mockedGetProducts    = vi.mocked(getProducts)
+    const mockedGetProducts = vi.mocked(getProducts)
     const mockedGetCategories = vi.mocked(getProductCategories)
 
     mockedGetProducts.mockResolvedValue({
@@ -44,7 +48,9 @@ describe("ProductProvider", () => {
       data: [productCategories[4]!],
     } as AxiosResponse<Category[]>)
 
-    const { result } = renderHook(() => useProductContext(), { wrapper: Wrapper })
+    const { result } = renderHook(() => useProductContext(), {
+      wrapper: Wrapper,
+    })
 
     expect(result.current.products).toEqual([])
     expect(result.current.categories).toEqual([])
@@ -58,7 +64,6 @@ describe("ProductProvider", () => {
   })
 
   it("removes a product when onDeleteProduct is called", async () => {
-
     vi.mocked(getProducts).mockResolvedValue({
       status: 200,
       data: [product],
@@ -73,12 +78,16 @@ describe("ProductProvider", () => {
       .spyOn(deleteModule, "deleteProductById")
       .mockResolvedValue({ status: 200 } as unknown as AxiosResponse<void>)
 
-    const { result } = renderHook(() => useProductContext(), { wrapper: Wrapper })
+    const { result } = renderHook(() => useProductContext(), {
+      wrapper: Wrapper,
+    })
 
     await waitFor(() => expect(result.current.products).toHaveLength(1))
 
     await act(async () => {
-      const fakeEvent = { preventDefault: vi.fn() } as unknown as MouseEvent<HTMLButtonElement>
+      const fakeEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as MouseEvent<HTMLButtonElement>
       await result.current.onDeleteProduct(fakeEvent, product.id)
     })
 

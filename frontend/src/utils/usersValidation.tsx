@@ -137,7 +137,7 @@ const loginValidation = z.object({
     .string()
     .min(4, "Email should have at least 4 characters.")
     .max(40, "Email can't be longer than 40 characters."),
-  password: z.string().optional(),
+  password: z.string().min(1, "Password is required."),
 })
 
 export {

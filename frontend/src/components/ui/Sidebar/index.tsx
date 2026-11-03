@@ -1,3 +1,4 @@
+import { translateByPath } from "@/utils/translateByPath"
 import { LOGO_IMAGE } from "@/constants/media"
 import { SHOP } from "@/constants/routes"
 import { useLocaleContext } from "@/context/localeContext"
@@ -80,23 +81,22 @@ export const Sidebar: FC<SidebarProps> = ({
           <li className={styles.listItem} onClick={() => onSelect("all")}>
             <div className={styles.listItemLink}>
               <span className={styles.listItemLinkContent}>
-                {components.sidebar.productCategories[camelCase("all", " ")]}
+                {components.sidebar.productCategories.all}
               </span>
             </div>
           </li>
-          {items.map((item: Category, index: number) => (
+          {items.map((item: Category) => (
             <li
-              key={index}
+              key={item.id}
               className={styles.listItem}
               onClick={() => onSelect(item.name)}
             >
               <div className={styles.listItemLink}>
                 <span className={styles.listItemLinkContent}>
-                  {
-                    components.sidebar.productCategories[
-                      camelCase(item.name, " ")
-                    ]
-                  }
+                  {translateByPath(
+                    components.sidebar.productCategories,
+                    camelCase(item.name, " "),
+                  )}
                 </span>
               </div>
             </li>

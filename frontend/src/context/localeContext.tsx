@@ -3,7 +3,7 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
-  useContext,
+  use,
   useState,
 } from "react"
 import de from "../i18n/de.json"
@@ -32,7 +32,7 @@ export const LocaleContextProvider = ({
   const [language, setLanguage] = useState<Language>("en")
 
   return (
-    <LocaleContext.Provider
+    <LocaleContext
       value={{
         languages,
         translate: languages[language],
@@ -41,12 +41,12 @@ export const LocaleContextProvider = ({
       }}
     >
       {children}
-    </LocaleContext.Provider>
+    </LocaleContext>
   )
 }
 
 export const useLocaleContext = () => {
-  const context = useContext(LocaleContext)
+  const context = use(LocaleContext)
   if (context === undefined) {
     throw new Error(
       "useLocaleContext must be used within a LocaleContextProvider",

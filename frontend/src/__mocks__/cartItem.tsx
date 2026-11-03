@@ -31,14 +31,14 @@ export const cartOilItem: Product = {
 }
 
 export const cartDifuserItem: Product = {
-id: 2,
-name: "cart difuser item",
-image: "cart difuser image.jpg",
-description: "cart difuser description",
-size: 10,
-price: 10,
-details: "cart difuser details",
-categoryId: 4,
-brand: "cart difuser brand",
-category: { name: "difuser" },
+  id: 2,
+  name: "cart difuser item",
+  image: "cart difuser image.jpg",
+  description: "cart difuser description",
+  size: 10,
+  price: 10,
+  details: "cart difuser details",
+  categoryId: 4,
+  brand: "cart difuser brand",
+  category: { name: "difuser" },
 }

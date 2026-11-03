@@ -5,8 +5,7 @@ import styles from "./itemFormInput.module.scss"
 
 interface ItemFormInputProps {
   name: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  updatedPropertyData: { [key: string]: any }
+  updatedPropertyData: object
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   type: string
 }
@@ -21,6 +20,8 @@ export const ItemFormInput: FC<ItemFormInputProps> = ({
     commonButtons: CommonButtons
     commonProperties: CommonProperties
   }
+
+  const value: unknown = Reflect.get(updatedPropertyData, name)
 
   return (
     <div className={styles.item}>
@@ -41,7 +42,11 @@ export const ItemFormInput: FC<ItemFormInputProps> = ({
             className={styles.input}
             onChange={onChange}
             placeholder={commonProperties[name]}
-            value={updatedPropertyData[name] || ""}
+            value={
+              typeof value === "string" || typeof value === "number"
+                ? value
+                : ""
+            }
             type={type}
           />
         )}

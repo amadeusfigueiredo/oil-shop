@@ -4,43 +4,31 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.5.2",
-    "@fortawesome/free-brands-svg-icons": "^6.4.2",
-    "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@types/node": "^20.14.2",
-    "@vitejs/plugin-react": "^4.3.1",
-    "autoprefixer": "^10.4.19",
-    "aws-sdk": "^2.1473.0",
-    "axios": "^1.4.0",
-    "cross-env": "^7.0.3",
-    "css-loader": "^7.1.2",
-    "embla-carousel-autoplay": "^8.1.7",
-    "embla-carousel-react": "^8.1.7",
+    "@fortawesome/fontawesome-svg-core": "^7.3.1",
+    "@fortawesome/free-brands-svg-icons": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@fortawesome/react-fontawesome": "^3.5.0",
+    "axios": "^1.21.0",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "minireset.css": "^0.0.7",
-    "node-sass": "^9.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.1",
-    "sass": "^1.64.2",
-    "style-loader": "^4.0.0",
-    "ts-jest": "^29.1.5",
-    "ts-loader": "^9.5.1",
-    "typescript": "^4.9.5",
-    "vite": "^5.3.2",
-    "vite-plugin-css-modules": "^0.0.1",
-    "vite-tsconfig-paths": "^4.3.2",
-    "web-vitals": "^2.1.4",
-    "zod": "^3.22.4"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.5",
+    "zod": "^4.6.7"
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:watch": "vitest --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "eslint": "npx eslint ."
+    "eslint": "npm run lint",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "browserslist": {
     "production": [
@@ -54,36 +42,33 @@
       "last 1 safari version"
     ]
   },
-  "todo-tree.customHighlight": {
-    "TODO": {
-      "icon": "check",
-      "type": "line",
-      "iconColour": "yellow",
-      "foreground": "red",
-      "background": "yellow"
-    },
-    "FIXME": {
-      "icon": "beaker",
-      "iconColour": "red",
-      "foreground": "white",
-      "background": "red"
-    }
-  },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.4.6",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/node-sass": "^4.11.7",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.14.1",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-jest": "^27.9.0",
-    "eslint-plugin-react": "^7.34.3",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "jsdom": "^24.1.0",
-    "prettier": "^2.8.8",
-    "typescript-plugin-css-modules": "^5.1.0",
-    "vitest": "^1.6.0"
+    "@eslint/js": "^10.0.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "@vitest/coverage-v8": "^5.1.0",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-x": "^5.28.8",
+    "globals": "^17.14.0",
+    "jsdom": "^30.1.3",
+    "prettier": "^3.9.10",
+    "sass": "^1.107.1",
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.5",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=24.19.0 <25"
+  },
+  "overrides": {
+    "minimatch": "^11.0.4"
   }
 }

@@ -18,7 +18,7 @@ export const useRegisterUser = () => {
   ): Promise<User> => {
     e.preventDefault()
     try {
-      let newUser: User
+      let newUser: User | undefined
 
       if (isAdmin) {
         newUser = await onCreateAdmin(e, data)
@@ -32,8 +32,7 @@ export const useRegisterUser = () => {
 
       await setLoggedUser(e, data.email, data.password)
       return newUser
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error by registering user", error)
       throw error
     }

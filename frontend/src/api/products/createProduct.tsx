@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from "axios"
 import { PRODUCTS } from "@/constants/api"
-import type { Product } from "@/types/Product"
+import type { CreateProduct, Product } from "@/types/Product"
 
 export async function createProduct(
-  product: Product
+  product: CreateProduct,
 ): Promise<AxiosResponse<{ product: Product }>> {
   const url = `${import.meta.env.VITE_APP_API_URL}${PRODUCTS}`
   try {

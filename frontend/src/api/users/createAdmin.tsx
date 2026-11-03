@@ -1,12 +1,13 @@
 import { CREATE_ADMIN } from "@/constants/api"
-import { CreateUser } from "@/types/User"
+import { CreateUser, User } from "@/types/User"
 import axios from "axios"
 
 export const createAdmin = async (item: CreateUser) => {
   try {
-    const response = await axios.post(
+    const response = await axios.post<{ user: User; message: string }>(
       `${import.meta.env.VITE_APP_API_URL}${CREATE_ADMIN}`,
       item,
+      { withCredentials: true },
     )
     if (
       (response && response.status === 201) ||

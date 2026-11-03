@@ -3,7 +3,7 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
-  useContext,
+  use,
   useState,
 } from "react"
 
@@ -23,7 +23,7 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(false)
   const [activePageLink, setActivePageLink] = useState<string>("")
   return (
-    <MenuContext.Provider
+    <MenuContext
       value={{
         showMobileMenu,
         setShowMobileMenu,
@@ -34,12 +34,12 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </MenuContext.Provider>
+    </MenuContext>
   )
 }
 
 export const useMenuContext = () => {
-  const context = useContext(MenuContext)
+  const context = use(MenuContext)
   if (!context) {
     throw new Error("useProductContext must be used within a ProductProvider")
   }

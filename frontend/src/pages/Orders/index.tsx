@@ -14,7 +14,7 @@ import styles from "./orders.module.scss"
 export const Orders: FC = () => {
   const { orders } = useGetOrders()
   const { verifyIsLoggedIn } = useVerifyIsLoggedIn()
-  const { user, isLoading } = useUserContext()
+  const { isLoading } = useUserContext()
   const { components } = useTranslation()
   const text = components.accountSectionHeader.orders
 
@@ -22,8 +22,7 @@ export const Orders: FC = () => {
     if (!isLoading) {
       verifyIsLoggedIn()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isLoading])
+  }, [isLoading, verifyIsLoggedIn])
 
   return (
     <main className={styles.wrapper} aria-label='Orders page'>
@@ -31,8 +30,8 @@ export const Orders: FC = () => {
       <section className={styles.ordersContainer}>
         {orders && orders.length > 0 ? (
           <ul className={styles.list}>
-            {orders.map((item, index) => (
-              <li className={styles.item} key={index}>
+            {orders.map((item) => (
+              <li className={styles.item} key={item.id}>
                 <Order item={item} />
               </li>
             ))}

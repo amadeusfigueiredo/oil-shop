@@ -44,4 +44,4 @@ export const filterUsersProps = [
     className: STYLES.BUTTONS.FILTER_OPTION,
     isAsc: false,
   },
-]
+] as const

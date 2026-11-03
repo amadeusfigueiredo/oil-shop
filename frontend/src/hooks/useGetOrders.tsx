@@ -31,7 +31,6 @@ export const useGetOrders = () => {
     }
 
     getOrdersWithDetails()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isLoading])
 
   return {

@@ -1,39 +1,16 @@
 import { ProductCard } from "@/components/products/ProductCard"
 import { useProductContext } from "@/context/useProductContext"
-import { Category, Product } from "@/types/Product"
-import { FC, useEffect, useState } from "react"
+import { Product } from "@/types/Product"
+import { FC } from "react"
 import styles from "./sortedProductsList.module.scss"
 
 export const SortedProductsList: FC = () => {
-  const [productsList, setProductsList] = useState<Product[]>([])
   const { products, sortCategory, categories } = useProductContext()
-
-  useEffect(() => {
-    const sortByCategory = (
-      products: Product[],
-      category: string,
-    ): Product[] => {
-      const categoryNames = categories.map(
-        (category: Category) => category.name,
-      )
-      if (categoryNames.includes(category)) {
-        return products.filter(
-          (product) =>
-            category && product.category && product.category.name === category,
-        )
-      } else {
-        return products
-      }
-    }
-
-    if (sortCategory) {
-      setProductsList(sortByCategory(products, sortCategory))
-    } else {
-      setProductsList(products)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, sortCategory])
+  const productsList =
+    sortCategory &&
+    categories.some((category) => category.name === sortCategory)
+      ? products.filter((product) => product.category?.name === sortCategory)
+      : products
 
   return (
     <ul className={styles.container} aria-label='products list'>

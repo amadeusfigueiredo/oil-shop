@@ -1,8 +1,13 @@
-import { Category, CreateProduct, EditProduct, Product } from "@/types/Product";
-import { createContext, Dispatch, FormEvent,MouseEvent, SetStateAction } from "react";
+import { Category, CreateProduct, EditProduct, Product } from "@/types/Product"
+import {
+  createContext,
+  Dispatch,
+  FormEvent,
+  MouseEvent,
+  SetStateAction,
+} from "react"
 
-
-type Value =  {
+type Value = {
   products: Product[]
   setProducts: Dispatch<SetStateAction<Product[]>>
   onCreateProduct: (data: {
@@ -22,6 +27,4 @@ type Value =  {
   categories: Category[]
 }
 
-export const ProductContext = createContext<Value>(
-  undefined!
-)
+export const ProductContext = createContext<Value>(undefined!)

@@ -31,11 +31,13 @@ describe("getProducts", () => {
   })
 
   it("throws error if status is not 200", async () => {
-    const axiosResponse = emptyAxiosResponse as unknown as AxiosResponse<Product[]>
+    const axiosResponse = emptyAxiosResponse as unknown as AxiosResponse<
+      Product[]
+    >
     mockedGet.mockResolvedValue(axiosResponse)
 
     await expect(getProducts()).rejects.toThrow(
-      `Got status ${axiosResponse.status}`
+      `Got status ${axiosResponse.status}`,
     )
   })
 

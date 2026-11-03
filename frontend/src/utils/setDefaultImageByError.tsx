@@ -1,4 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const setDefaultImageByError = (event: any, image: string) => {
-  event.target.src = image
+import type { SyntheticEvent } from "react"
+
+export const setDefaultImageByError = (
+  event: SyntheticEvent<HTMLImageElement>,
+  image: string,
+) => {
+  if (event.currentTarget.getAttribute("src") !== image)
+    event.currentTarget.src = image
 }

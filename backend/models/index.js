@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import '../config/env.js';
 import Sequelize from 'sequelize';
 import orderModel from './order.js';
 import orderItemModel from './orderItem.js';
@@ -8,7 +8,7 @@ import roleModel from './role.js';
 import shippingDataModel from './shippingData.js';
 import userModel from './user.js';
 
-dotenv.config();
+if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is required');
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   protocol: 'postgres',

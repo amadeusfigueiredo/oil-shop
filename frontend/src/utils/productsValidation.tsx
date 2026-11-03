@@ -1,6 +1,7 @@
 import { z } from "zod"
 
 const createProductSchema = z.object({
+  brand: z.string().min(1).max(100),
   name: z.string().refine((value) => value.length <= 30, {
     message: "Product name can't be longer than 30 characters.",
   }),

@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Footer } from "@/components/ui/Footer"
 import { Navbar } from "@/components/ui/Navbar"
 import { NavigationMenu } from "@/components/ui/NavigationMenu"
@@ -9,11 +10,13 @@ export const AppRoutes = () => {
     <>
       <Navbar />
       <NavigationMenu />
-      <Routes>
-        {routes.map(({ path, element }, index) => (
-          <Route key={index} path={path} element={element} />
-        ))}
-      </Routes>
+      <Suspense fallback={<p role='status'>Loading…</p>}>
+        <Routes>
+          {routes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Routes>
+      </Suspense>
       <Footer />
     </>
   )

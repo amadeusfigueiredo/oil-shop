@@ -22,7 +22,7 @@ const LocaleContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<keyof typeof languages>("en")
 
   return (
-    <LocaleContext.Provider
+    <LocaleContext
       value={{
         languages,
         translate: languages[language],
@@ -31,7 +31,7 @@ const LocaleContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
       }}
     >
       {children}
-    </LocaleContext.Provider>
+    </LocaleContext>
   )
 }
 
@@ -51,11 +51,7 @@ const UserContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
     shippingData: {},
   }
 
-  return (
-    <UserContext.Provider value={userContextValue}>
-      {children}
-    </UserContext.Provider>
-  )
+  return <UserContext value={userContextValue}>{children}</UserContext>
 }
 
 const setNotification = vi.fn()
@@ -63,7 +59,7 @@ const CartContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([cartItem])
 
   return (
-    <CartContext.Provider
+    <CartContext
       value={{
         cart,
         setCart,
@@ -71,7 +67,7 @@ const CartContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
           const existingProduct = cart.find(
             (item: CartItem) => item.product.name === product.name,
           )
-      
+
           if (quantity > 0) {
             if (existingProduct) {
               setCart(
@@ -84,7 +80,7 @@ const CartContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
             } else {
               setCart([...cart, { product, quantity }])
             }
-      
+
             setNotification(
               `${quantity} ${titleCase(product.name, "_")} were added to your cart`,
             )
@@ -114,7 +110,7 @@ const CartContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
       }}
     >
       {children}
-    </CartContext.Provider>
+    </CartContext>
   )
 }
 
@@ -157,15 +153,15 @@ describe("Cart does", () => {
       wrapper: CartContextWrapper,
     })
 
-    expect(result.current.cart).toEqual([cartItem]) 
-    
+    expect(result.current.cart).toEqual([cartItem])
+
     act(() => {
       result.current.addProduct(cartDifuserItem, 1)
     })
 
     expect(result.current.cart).toEqual([
       { ...cartItem, quantity: 1 },
-      { product: cartDifuserItem, quantity: 1 }
+      { product: cartDifuserItem, quantity: 1 },
     ])
   })
 
@@ -174,14 +170,12 @@ describe("Cart does", () => {
       wrapper: CartContextWrapper,
     })
 
-    expect(result.current.cart).toEqual([cartItem]) 
-    
+    expect(result.current.cart).toEqual([cartItem])
+
     act(() => {
       result.current.updateProductQuantity(cartItem.product.name, 3)
     })
 
-    expect(result.current.cart).toEqual([
-      { ...cartItem, quantity: 3 }
-    ])
+    expect(result.current.cart).toEqual([{ ...cartItem, quantity: 3 }])
   })
 })

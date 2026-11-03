@@ -49,9 +49,9 @@ export const filterProductsProps = [
     isAsc: true,
   },
   {
-    action: (list: Product[]) => list.sort((a, b) => a.size - b.size),
+    action: (list: Product[]) => list.sort((a, b) => b.size - a.size),
     targetProperty: "size",
     className: STYLES.BUTTONS.ACTION,
     isAsc: false,
   },
-]
+] as const

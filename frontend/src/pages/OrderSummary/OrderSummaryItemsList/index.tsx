@@ -14,8 +14,8 @@ export const OrderSummaryItemsList: FC<OrderSummaryItemsListProps> = ({
     <section className={styles.container} aria-label='Ordered items'>
       <ul className={styles.list}>
         {orderAndCartItems.orderItems &&
-          orderAndCartItems.orderItems.map((item, index) => (
-            <li key={index} className={styles.item}>
+          orderAndCartItems.orderItems.map((item) => (
+            <li key={item.product.id} className={styles.item}>
               <OrderSummaryItem
                 image={item.product.image}
                 name={item.product.name}

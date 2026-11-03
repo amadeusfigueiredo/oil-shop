@@ -1,6 +1,6 @@
-import { Product } from "@/types/Product";
+import { Product } from "@/types/Product"
 
-export const products:Product[] = [
+export const products: Product[] = [
   {
     id: 1,
     name: "Test Product one",
@@ -9,9 +9,9 @@ export const products:Product[] = [
     price: 15,
     description: "desc",
     categoryId: 5,
-    category: {name:"massageOil"},
+    category: { name: "massageOil" },
     details: "details",
-    brand: "brands"
+    brand: "brands",
   },
   {
     id: 2,
@@ -21,8 +21,8 @@ export const products:Product[] = [
     price: 25,
     categoryId: 5,
     description: "description two",
-    category: {name:"massageOil"},
+    category: { name: "massageOil" },
     details: "details",
-    brand: "brands"
-  }
+    brand: "brands",
+  },
 ]

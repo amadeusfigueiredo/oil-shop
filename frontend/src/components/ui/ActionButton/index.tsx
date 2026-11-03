@@ -1,3 +1,4 @@
+import type { JSX } from "react"
 import { FC, MouseEvent, ReactNode } from "react"
 import styles from "./actionButton.module.scss"
 

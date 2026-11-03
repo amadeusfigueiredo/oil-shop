@@ -1,6 +1,6 @@
 @use "@/styles/theme" as theme;
 @use "@/styles/media" as media;
-@import "@/styles/helpers/mixins";
+@use "@/styles/helpers/mixins" as *;
 
 .container {
   align-items: flex-start;
@@ -78,7 +78,9 @@
     background-color: theme.$branding-color-primary;
     border-radius: theme.$border-radius-circle;
     opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
+    transition:
+      opacity 0.3s,
+      transform 0.3s;
     transform: scale(0);
   }
 }

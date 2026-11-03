@@ -1,12 +1,14 @@
+import { decodeJWT } from '../middleware/decodeToken.js';
+import { requireUserAccess } from '../middleware/authorization.js';
 import dotenv from 'dotenv';
 import express from 'express';
 import { validateBody } from '../middleware/validationMiddleware.js';
 import { shippingDataValidation } from '../middleware/validationSchemas/userSchema.js';
 import db from '../models/index.js';
-dotenv.config();
+dotenv.config({ quiet: true });
 const router = express.Router();
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', decodeJWT, requireUserAccess('id'), async (req, res) => {
   try {
     let shippingData = await db.shippingData.findOne({
       where: { userId: req.params.id },
@@ -38,7 +40,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', decodeJWT, requireUserAccess('id'), async (req, res) => {
   try {
     const shippingData = await db.shippingData.findOne({
       where: { userId: req.params.id },
@@ -63,6 +65,8 @@ router.post('/:id', async (req, res) => {
 
 router.put(
   '/:id',
+  decodeJWT,
+  requireUserAccess('id'),
   validateBody(shippingDataValidation),
 
   async (req, res) => {
@@ -72,10 +76,11 @@ router.put(
       });
 
       if (!shippingData) {
-        await db.shippingData.create({
+        const created = await db.shippingData.create({
           ...req.body,
           userId: req.params.id,
         });
+        return res.status(200).json(created);
       } else {
         shippingData.userId = req.params.id;
         shippingData.street = req.body.street || shippingData.street;

@@ -27,7 +27,7 @@ import {
   SetStateAction,
   SyntheticEvent,
   createContext,
-  useContext,
+  use,
   useEffect,
   useState,
 } from "react"
@@ -47,74 +47,68 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const isCreatedByAdmin = currentPath.includes(CURRENT_ADMIN)
   const isSignup = currentPath.includes(SIGN_UP)
 
-  const verifyLogin = async () => {
-    setIsLoading(true)
-    try {
-      const authToken = await getDecodedAuthToken()
-      if (authToken && authToken.status === 200) {
-        const authorizatedUserId = authToken.data.id
-        const loggedInUserResponse = await getAuthenticatedUserById(
-          authorizatedUserId,
-        )
-        if (loggedInUserResponse?.status === 200) {
-          const userData = loggedInUserResponse.data
-          setUser(userData)
+  useEffect(() => {
+    let active = true
+    const verifyLogin = async () => {
+      try {
+        const authToken = await getDecodedAuthToken()
+        const response =
+          authToken?.status === 200
+            ? await getAuthenticatedUserById(authToken.data.id)
+            : undefined
+        if (!active) return
+        if (response?.status === 200) {
+          setUser(response.data)
           setIsLoggedIn(true)
         } else {
-          resetUserState()
+          setUser(null)
+          setIsLoggedIn(false)
         }
-      } else {
-        resetUserState()
-      }
-    } catch (error) {
-      resetUserState()
-    }
-    setIsLoading(false)
-  }
-
-  const fetchUsers = async () => {
-    try {
-      const response = await getUsers()
-      if (response?.status === 200) {
-        setUsers(response.data)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const fetchShippingData = async () => {
-    try {
-      if (user && !isLoading) {
-        const userId = user.id
-        const response = await getUserShippingData(userId)
-        if (response?.status === 200) {
-          setShippingData(response.data)
+      } catch {
+        if (active) {
+          setUser(null)
+          setIsLoggedIn(false)
         }
+      } finally {
+        if (active) setIsLoading(false)
       }
-    } catch (error) {
-      const message = "Error by getting user shipping data"
-      onRequestError(error, setNotification, message)
     }
-  }
-
-  useEffect(() => {
-    verifyLogin()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    void verifyLogin()
+    return () => {
+      active = false
+    }
   }, [isLoggedIn])
-  useEffect(() => {
-    fetchUsers()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  useEffect(() => {
-    fetchShippingData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
 
-  const resetUserState = () => {
-    setUser(null)
-    setIsLoggedIn(false)
-  }
+  useEffect(() => {
+    if (!isLoggedIn || user?.role?.name !== "admin") return
+    let active = true
+    void getUsers()
+      .then((response) => {
+        if (active && response?.status === 200) setUsers(response.data)
+      })
+      .catch((error: unknown) => {
+        console.error(error)
+      })
+    return () => {
+      active = false
+    }
+  }, [isLoggedIn, user?.role?.name])
+
+  useEffect(() => {
+    if (!user || isLoading) return
+    let active = true
+    void getUserShippingData(user.id)
+      .then((response) => {
+        if (active && response?.status === 200) setShippingData(response.data)
+      })
+      .catch((error: unknown) => {
+        if (active)
+          onRequestError(error, setNotification, "Error getting shipping data")
+      })
+    return () => {
+      active = false
+    }
+  }, [user, isLoading, setNotification])
 
   const onDeleteUser = async (e: SyntheticEvent, id: number) => {
     e.preventDefault()
@@ -148,11 +142,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       const typedItem = convertDataToExpectedUserTypes(data)
-      await validate({
+      const validUser = await validate({
         item: typedItem,
         schema: createUserSchema,
       })
-      const response = await createUser(typedItem)
+      const response = await createUser(validUser)
       if (response && response.status === 422) {
         const message =
           "This user is already existent. Please try with another email."
@@ -194,7 +188,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           onSetNotification("Admin created succesfully")
         }
         if (isSignup) {
-          return validUser
+          return newUser
         }
       }
     } catch (error) {
@@ -203,17 +197,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const validateUpdatedUser = async (data: any) => {
-    try {
-      if (updateUserSchema) {
-        return updateUserSchema.parse(data)
-      }
-    } catch (error) {
-      console.error("Error by validating property:", error)
-      throw error
-    }
-  }
+  const validateUpdatedUser = (data: EditUser) => updateUserSchema.parse(data)
 
   const onUpdateUser = async ({
     id,
@@ -272,7 +256,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <UserContext.Provider
+    <UserContext
       value={{
         isLoggedIn,
         setIsLoggedIn,
@@ -289,12 +273,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </UserContext.Provider>
+    </UserContext>
   )
 }
 
 export const useUserContext = () => {
-  const context = useContext(UserContext)
+  const context = use(UserContext)
   if (!context) {
     throw new Error("useUserContext shoud be within a UserProvider")
   }

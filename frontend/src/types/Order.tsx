@@ -36,6 +36,7 @@ export interface OrderData {
 
 export interface CartItem {
   product: {
+    id: number
     image: string
     name: string
     size: string

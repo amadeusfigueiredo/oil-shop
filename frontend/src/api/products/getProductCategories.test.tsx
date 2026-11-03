@@ -14,7 +14,6 @@ describe("getProductCategories", () => {
   const baseUrl = import.meta.env.VITE_APP_API_URL
 
   it("resolves with data when status is 200", async () => {
-    
     const axiosResponse = {
       data: productCategories,
       status: 200,
@@ -32,13 +31,14 @@ describe("getProductCategories", () => {
   })
 
   it("throws if status is not 200", async () => {
-    const axiosResponse = 
-      emptyAxiosResponse as unknown as AxiosResponse<Category[]>
+    const axiosResponse = emptyAxiosResponse as unknown as AxiosResponse<
+      Category[]
+    >
 
     mockedGet.mockResolvedValue(axiosResponse)
 
     await expect(getProductCategories()).rejects.toThrow(
-      "getProductCategories: Unexpected status 404"
+      "getProductCategories: Unexpected status 404",
     )
   })
 

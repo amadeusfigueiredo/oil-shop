@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/utils/getErrorMessage"
 import { LOCAL_STORAGE_CART } from "@/constants/localStorage"
 import { ORDER_SUMMARY } from "@/constants/routes"
 import { SHORT_MESSAGE_TIMEOUT } from "@/constants/time"
@@ -40,7 +41,7 @@ export const useSubmitOrder = () => {
         setCart([])
       }
     } catch (error) {
-      setNotification(error.message)
+      setNotification(getErrorMessage(error))
       setTimeout(() => setNotification(null), SHORT_MESSAGE_TIMEOUT)
     }
   }

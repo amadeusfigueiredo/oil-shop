@@ -30,7 +30,7 @@ describe("updateProduct", () => {
     expect(mockedPut).toHaveBeenCalledWith(
       `${baseUrl}${PRODUCTS}/${product.id}`,
       product,
-      { withCredentials: true }
+      { withCredentials: true },
     )
     expect(result).toBe(axiosResponse)
   })
@@ -42,7 +42,7 @@ describe("updateProduct", () => {
     mockedPut.mockResolvedValue(axiosResponse)
 
     await expect(updateProduct(product.id, product)).rejects.toThrow(
-      `updateProduct: Unexpected status ${axiosResponse.status}`
+      `updateProduct: Unexpected status ${axiosResponse.status}`,
     )
   })
 

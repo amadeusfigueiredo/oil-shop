@@ -356,7 +356,8 @@
 
 @mixin form-input-label {
   position: absolute;
-  transition: color 0.25s cubic-bezier(0, 0, 0.2, 1) 0ms,
+  transition:
+    color 0.25s cubic-bezier(0, 0, 0.2, 1) 0ms,
     top 0.25s cubic-bezier(0, 0, 0.2, 1) 0ms;
   color: rgb(58, 58, 58);
   width: calc(100% - 48px);

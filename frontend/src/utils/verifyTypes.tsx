@@ -1,34 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-interface ConvertUserData {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  [key: string]: any
-}
+import type { z } from "zod"
+import type { CreateProduct } from "@/types/Product"
+import type { CreateUser } from "@/types/User"
 
-export const convertDataToExpectedUserTypes = (data: ConvertUserData) => {
-  return {
-    ...data,
-    firstName: String(data.firstName),
-    lastName: String(data.lastName),
-    email: String(data.email),
-    password: String(data.password),
-  }
-}
-
-interface Product {
-  details: string
-  description: string
-  categoryId: number
-  size: number
-  price: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
+export const convertDataToExpectedUserTypes = (
+  data: CreateUser,
+): CreateUser => ({
+  ...data,
+  firstName: String(data.firstName),
+  lastName: String(data.lastName),
+  email: String(data.email),
+  password: String(data.password),
+})
 
 interface ConvertProductData {
-  data: Product
+  data: CreateProduct
   file: File | null | undefined
   verifyImgUrl: (
     file: File | null | undefined,
@@ -42,56 +27,19 @@ export const convertDataToExpectedProductTypes = async ({
   file,
   verifyImgUrl,
   upload,
-}: ConvertProductData): Promise<Product> => {
-  return {
-    ...data,
-    image: file ? await verifyImgUrl(file, upload) : "",
-    description: String(data.description),
-    categoryId: Number(data.categoryId),
-    size: Number(data.size),
-    price: Number(data.price),
-  }
-}
+}: ConvertProductData): Promise<CreateProduct> => ({
+  ...data,
+  image: file ? await verifyImgUrl(file, upload) : data.image,
+  description: String(data.description),
+  categoryId: Number(data.categoryId),
+  size: Number(data.size),
+  price: Number(data.price),
+})
 
-interface ExtractValidProperty {
-  key: string
-  updatedData: { [key: string]: any }
-  upload: (file: File) => Promise<string>
-  file?: File
-}
-
-export const extractValidProperty = async ({
-  key,
-  updatedData,
-  upload,
-  file,
-}: ExtractValidProperty): Promise<{ [key: string]: any }> => {
-  if (key === "image" && file) {
-    const image = await upload(file)
-    return { [key]: image }
-  } else {
-    const value = updatedData[key]
-    if (key === "price" || key === "size") {
-      return { [key]: Number(value) }
-    } else {
-      return { [key]: value }
-    }
-  }
-}
-
-interface Validate {
-  item: any
-  schema: any
-}
-
-export const validate = async ({ item, schema }: Validate): Promise<any> => {
-  try {
-    if (schema) {
-      return schema.parse(item)
-    } else {
-      return
-    }
-  } catch (error) {
-    console.error("Error by validation", error)
-  }
-}
+export const validate = async <Schema extends z.ZodType>({
+  item,
+  schema,
+}: {
+  item: unknown
+  schema: Schema
+}): Promise<z.output<Schema>> => schema.parse(item)

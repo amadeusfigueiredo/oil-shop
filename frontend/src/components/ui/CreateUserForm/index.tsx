@@ -8,7 +8,10 @@ import { FC, FormEvent, useState } from "react"
 import styles from "./createUserForm.module.scss"
 
 interface CreateUserFormProps {
-  onCreate: (e: FormEvent<HTMLFormElement>, data: CreateUser) => Promise<User>
+  onCreate: (
+    e: FormEvent<HTMLFormElement>,
+    data: CreateUser,
+  ) => Promise<User | undefined>
 }
 
 export const CreateUserForm: FC<CreateUserFormProps> = ({ onCreate }) => {
@@ -22,7 +25,8 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ onCreate }) => {
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await onCreate(e, data)
+    const createdUser = await onCreate(e, data)
+    if (!createdUser) return
     setData({
       firstName: "",
       lastName: "",
@@ -40,7 +44,13 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({ onCreate }) => {
           onChangeListener={(e) => listenInput(e, data, setData)}
           placeholder={field}
           label={field}
-          type='text'
+          type={
+            field === "password"
+              ? "password"
+              : field === "email"
+                ? "email"
+                : "text"
+          }
           value={data[field as keyof CreateUser]?.toString() ?? ""}
         />
       ))}

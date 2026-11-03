@@ -1,5 +1,7 @@
 import { NotificationContextType } from "@/types/Notification"
-import { AxiosError } from "axios"
+import { isAxiosError } from "axios"
+import { ZodError } from "zod"
+import { getErrorMessage } from "./getErrorMessage"
 
 interface ResponseData {
   message?: string
@@ -7,12 +9,18 @@ interface ResponseData {
 }
 
 export const onRequestError = (
-  error: AxiosError<ResponseData>,
+  error: unknown,
   setNotification: NotificationContextType["onSetNotification"],
   message = "Error by handling request",
 ) => {
-  const errorMessage = error?.response?.data?.message
-  const errorDetails = error?.response?.data?.errors?.[0]?.message
+  const data = isAxiosError<ResponseData>(error)
+    ? error.response?.data
+    : undefined
+  const errorMessage = data?.message
+  const errorDetails =
+    error instanceof ZodError
+      ? error.issues[0]?.message
+      : data?.errors?.[0]?.message
 
   if (setNotification) {
     if (errorDetails) {
@@ -23,10 +31,6 @@ export const onRequestError = (
       setNotification(`Error: ${errorMessage}`)
       return
     }
-    if (error.message) {
-      setNotification(error.message)
-      return
-    }
-    setNotification(message)
+    setNotification(getErrorMessage(error, message))
   }
 }

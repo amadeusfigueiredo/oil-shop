@@ -10,13 +10,13 @@ export const editableProductProperties = [
   "details",
 ]
 
-export const defaultProductData:CreateProduct = {
-    categoryId: 0,
-    name: "",
-    details: "",
-    description: "",
-    brand: "",
-    price: 0,
-    size: 0,
-    image: "",
-  }
+export const defaultProductData: CreateProduct = {
+  categoryId: 0,
+  name: "",
+  details: "",
+  description: "",
+  brand: "",
+  price: 0,
+  size: 0,
+  image: "",
+}

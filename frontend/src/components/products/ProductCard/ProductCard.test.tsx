@@ -17,7 +17,7 @@ const LocaleContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<keyof typeof languages>("en")
 
   return (
-    <LocaleContext.Provider
+    <LocaleContext
       value={{
         languages,
         translate: languages[language],
@@ -26,14 +26,14 @@ const LocaleContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
       }}
     >
       {children}
-    </LocaleContext.Provider>
+    </LocaleContext>
   )
 }
 const CartContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([])
 
   return (
-    <CartContext.Provider
+    <CartContext
       value={{
         cart,
         setCart,
@@ -65,7 +65,7 @@ const CartContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
       }}
     >
       {children}
-    </CartContext.Provider>
+    </CartContext>
   )
 }
 

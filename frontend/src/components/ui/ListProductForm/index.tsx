@@ -22,10 +22,7 @@ interface Props {
   setShowForm?: Dispatch<SetStateAction<boolean>>
 }
 
-export function ListProductForm ({
-  item,
-  setShowForm,
-}:Props)  {
+function ProductForm({ item, setShowForm }: Props) {
   const { onUpdateProduct, onDeleteProduct } = useProductContext()
   const { components } = useTranslation()
 
@@ -39,20 +36,15 @@ export function ListProductForm ({
       image: item.image,
       brand: item.brand,
     }),
-    [item]
+    [item],
   )
 
-  // 2) Keep updatedData in sync if item changes
-  const [updatedData, setUpdatedData] =
-    useState<EditProduct>(initialData)
-  useEffect(() => {
-    setUpdatedData(initialData)
-  }, [initialData])
+  const [updatedData, setUpdatedData] = useState<EditProduct>(initialData)
 
   const [file, setFile] = useState<File | null>(null)
   const previewUrl = useMemo(
     () => (file ? URL.createObjectURL(file) : null),
-    [file]
+    [file],
   )
   useEffect(() => {
     return () => {
@@ -78,32 +70,22 @@ export function ListProductForm ({
       setUpdatedData,
     })
     setShowForm?.(false)
-  }, [
-    file,
-    updatedData,
-    initialData,
-    item.id,
-    onUpdateProduct,
-    setShowForm,
-  ])
+  }, [file, updatedData, initialData, item.id, onUpdateProduct, setShowForm])
 
-  const onInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value, files } = e.target
-      if (name === "image" && files?.length) {
-        setFile(files[0] ?? null)
-        } else {
-        setUpdatedData((prev) => ({
-          ...prev,
-          [name]: value,
-        }))
-      }
-    },
-    []
-  )
+  const onInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = e.target
+    if (name === "image" && files?.length) {
+      setFile(files[0] ?? null)
+    } else {
+      setUpdatedData((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
+    }
+  }, [])
 
   return (
-    <article className={styles.wrapper} aria-label="Edit Product">
+    <article className={styles.wrapper} aria-label='Edit Product'>
       <form className={styles.form}>
         {Object.keys(initialData).map((key) => (
           <ItemFormInput
@@ -120,12 +102,8 @@ export function ListProductForm ({
         <div className={styles.imageContainer}>
           <img
             className={styles.image}
-            src={
-              previewUrl ||
-              item.image ||
-              DEFAULT_PRODUCT_IMAGE
-            }
-            alt="Product Preview"
+            src={previewUrl || item.image || DEFAULT_PRODUCT_IMAGE}
+            alt='Product Preview'
           />
         </div>
 
@@ -144,4 +122,8 @@ export function ListProductForm ({
       </div>
     </article>
   )
+}
+
+export function ListProductForm(props: Props) {
+  return <ProductForm key={JSON.stringify(props.item)} {...props} />
 }

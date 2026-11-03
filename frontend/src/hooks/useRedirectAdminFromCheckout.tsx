@@ -12,17 +12,26 @@ export const useRedirectAdminFromCheckout = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    let redirectTimeoutId: string | number | NodeJS.Timeout | undefined
+    let redirectTimeoutId: ReturnType<typeof setTimeout> | undefined
+    let notificationTimeoutId: ReturnType<typeof setTimeout> | undefined
     if (user?.role?.name === "admin") {
       setNotification(
         "As an Admin you can not visit this page, make an customer account for that",
       )
-      setTimeout(() => setNotification(null), SHORT_MESSAGE_TIMEOUT)
-      setTimeout(() => navigate(CURRENT_ADMIN), LONG_REDIRECT_TIMEOUT)
+      notificationTimeoutId = setTimeout(
+        () => setNotification(null),
+        SHORT_MESSAGE_TIMEOUT,
+      )
+      redirectTimeoutId = setTimeout(
+        () => navigate(CURRENT_ADMIN),
+        LONG_REDIRECT_TIMEOUT,
+      )
     }
-    return () => clearTimeout(redirectTimeoutId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, navigate])
+    return () => {
+      clearTimeout(redirectTimeoutId)
+      clearTimeout(notificationTimeoutId)
+    }
+  }, [user, navigate, setNotification])
 
   return { setNotification, isLoggedIn, user }
 }

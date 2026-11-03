@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios"
 import { PRODUCTS } from "@/constants/api"
-import type { Product } from "@/types/Product"
+import type { EditProduct, Product } from "@/types/Product"
 
 export async function updateProduct(
   productId: number,
-  product: Product
+  product: EditProduct,
 ): Promise<AxiosResponse<{ product: Product }>> {
   const url = `${import.meta.env.VITE_APP_API_URL}${PRODUCTS}/${productId}`
   try {

@@ -14,14 +14,8 @@ export interface Translation {
 export interface CommonButtons {
   [key: string]: string
 }
-export interface Pages {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
-export interface Components {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
+export type Pages = (typeof languages)[Language]["pages"]
+export type Components = (typeof languages)[Language]["components"]
 export interface CommonProperties {
   [key: string]: string
 }

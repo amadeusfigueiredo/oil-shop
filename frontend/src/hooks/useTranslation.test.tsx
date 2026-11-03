@@ -11,7 +11,7 @@ const ContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<keyof typeof languages>("en")
 
   return (
-    <LocaleContext.Provider
+    <LocaleContext
       value={{
         languages,
         translate: languages[language],
@@ -20,7 +20,7 @@ const ContextWrapper: FC<{ children: ReactNode }> = ({ children }) => {
       }}
     >
       {children}
-    </LocaleContext.Provider>
+    </LocaleContext>
   )
 }
 

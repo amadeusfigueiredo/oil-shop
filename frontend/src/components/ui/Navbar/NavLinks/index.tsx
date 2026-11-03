@@ -26,6 +26,7 @@ export const NavLinks: FC = () => {
         {isLoggedIn ? (
           <li className={styles.logout}>
             <Link
+              aria-label='My account'
               className={styles.link}
               to={
                 (user && user.role?.name) === "admin"
@@ -38,12 +39,12 @@ export const NavLinks: FC = () => {
             <LogoutButton className={STYLES.BUTTONS.LOGOUT} />
           </li>
         ) : (
-          <Link className={styles.link} to={LOGIN}>
+          <Link className={styles.link} to={LOGIN} aria-label='Sign in'>
             <FontAwesomeIcon icon={getIconByName("faUser")} color='#fff' />
           </Link>
         )}
         <li className={styles.cart}>
-          <Link className={styles.link} to={CART}>
+          <Link className={styles.link} to={CART} aria-label='Shopping cart'>
             <FontAwesomeIcon
               icon={getIconByName("faCartShopping")}
               color='#fff'

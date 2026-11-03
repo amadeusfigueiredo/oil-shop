@@ -38,8 +38,8 @@ export const Carousel: FC<CarouselProps> = ({ items }) => {
     <section className={styles.carousel}>
       <div className={`embla ${styles.embla}`} ref={emblaRef}>
         <div className={`embla__container ${styles.emblaContainer}`}>
-          {items.map((item: Product, index: number) => (
-            <div key={index} className={`embla__slide ${styles.emblaSlide}`}>
+          {items.map((item: Product) => (
+            <div key={item.id} className={`embla__slide ${styles.emblaSlide}`}>
               <div className={styles.slideItem}>
                 <ProductCard product={item} />
               </div>

@@ -1,10 +1,10 @@
 import { USERS } from "@/constants/api"
-import { CreateUser } from "@/types/User"
+import { CreateUser, User } from "@/types/User"
 import axios from "axios"
 
 export const createUser = async (user: CreateUser) => {
   try {
-    const response = await axios.post(
+    const response = await axios.post<{ user: User; message: string }>(
       `${import.meta.env.VITE_APP_API_URL}${USERS}`,
       user,
     )

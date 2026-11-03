@@ -27,7 +27,7 @@ describe("deleteProductById", () => {
 
     expect(mockedDelete).toHaveBeenCalledWith(
       `${baseUrl}${PRODUCTS}/${product.id}`,
-      { withCredentials: true }
+      { withCredentials: true },
     )
     expect(result).toBe(axiosResponse)
   })
@@ -37,7 +37,7 @@ describe("deleteProductById", () => {
     mockedDelete.mockResolvedValue(axiosResponse)
 
     await expect(deleteProductById(product.id)).rejects.toThrow(
-      `deleteProductById: Unexpected status ${axiosResponse.status}`
+      `deleteProductById: Unexpected status ${axiosResponse.status}`,
     )
   })
 

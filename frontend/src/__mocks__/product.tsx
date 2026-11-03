@@ -12,4 +12,3 @@ export const product: Product = {
   brand: "test brand",
   category: { name: "massage oil" },
 }
-

@@ -1,4 +1,3 @@
-
 export interface Product {
   id: number
   name: string
@@ -37,5 +36,3 @@ export interface EditProduct {
   image: string
   brand: string
 }
-
-
